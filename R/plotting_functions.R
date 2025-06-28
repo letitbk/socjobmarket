@@ -20,6 +20,7 @@
 #' print(plots$transition_rates)
 #' }
 create_analysis_plots <- function(summary_results, include_ribbons = TRUE, theme_style = "minimal") {
+  RECESSION_START <- 2008  # Define locally
 
   # Set theme
   plot_theme <- switch(theme_style,
@@ -153,6 +154,7 @@ create_analysis_plots <- function(summary_results, include_ribbons = TRUE, theme
 #' }
 create_single_simulation_plot <- function(results, show_details = TRUE) {
   yearly_stats <- results$yearly_stats
+  RECESSION_START <- 2008  # Define locally
 
   # Calculate placement rate
   yearly_stats$placement_rate <- yearly_stats$placements_made / pmax(yearly_stats$candidates_seeking, 1)
@@ -173,6 +175,7 @@ create_single_simulation_plot <- function(results, show_details = TRUE) {
 
   if (show_details) {
     # Add text annotations for key periods
+    RECESSION_END <- 2012  # Define locally too
     pre_recession_rate <- mean(yearly_stats$placement_rate[yearly_stats$year < RECESSION_START])
     recession_rate <- mean(yearly_stats$placement_rate[yearly_stats$year >= RECESSION_START & yearly_stats$year <= RECESSION_END])
 

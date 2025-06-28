@@ -76,6 +76,10 @@ calculate_match_quality_vectorized <- function(candidates_dt, department) {
 #' openings <- generate_job_openings(faculty, departments, 2010)
 #' }
 generate_job_openings <- function(faculty_agents, departments, year, recession_effects = NULL) {
+  # Define parameters locally
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+
   # Economic conditions
   is_recession <- year >= RECESSION_START & year <= RECESSION_END
 
@@ -146,6 +150,10 @@ generate_job_openings <- function(faculty_agents, departments, year, recession_e
 #' results <- run_hiring_market_optimized(candidates, departments, 2020)
 #' }
 run_hiring_market_optimized <- function(candidates, departments_with_openings, year, scenario = NULL) {
+  # Define parameters locally
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+
   # Convert to data.table
   candidates <- data.table::as.data.table(candidates)
   departments_with_openings <- data.table::as.data.table(departments_with_openings)

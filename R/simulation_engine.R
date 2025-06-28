@@ -25,10 +25,15 @@
 #' )
 #' }
 run_simulation_optimized <- function(seed = 123,
-                                   simulation_years = SIMULATION_YEARS,
-                                   annual_phd_cohort = ANNUAL_PHD_COHORT,
-                                   num_departments = NUM_DEPARTMENTS,
+                                   simulation_years = 20,
+                                   annual_phd_cohort = 300,
+                                   num_departments = 150,
                                    scenario = NULL) {
+  # Define simulation parameters
+  START_YEAR <- 2000
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+  AVG_DEPT_SIZE <- 15
   set.seed(seed)
 
   # Initialize agents using data.table
@@ -206,14 +211,12 @@ run_simulation_optimized <- function(seed = 123,
       outcome_counter <- outcome_counter + n_placed
     }
 
-    # Store yearly statistics
-    yearly_stats[year_idx, `:=`(
-      year = year,
-      total_openings = sum(departments_with_openings$openings),
-      candidates_seeking = nrow(job_seekers),
-      placements_made = nrow(market_results$placements),
-      failed_searches = market_results$failed_searches
-    )]
+    # Store yearly statistics using set() to avoid variable name conflicts
+    data.table::set(yearly_stats, i = year_idx, j = "year", value = year)
+    data.table::set(yearly_stats, i = year_idx, j = "total_openings", value = sum(departments_with_openings$openings))
+    data.table::set(yearly_stats, i = year_idx, j = "candidates_seeking", value = nrow(job_seekers))
+    data.table::set(yearly_stats, i = year_idx, j = "placements_made", value = nrow(market_results$placements))
+    data.table::set(yearly_stats, i = year_idx, j = "failed_searches", value = market_results$failed_searches)
 
     # Remove placed/alt-career candidates
     candidate_pool <- candidate_pool[!status %in% c("faculty", "alt_career")]
@@ -251,9 +254,9 @@ run_simulation_optimized <- function(seed = 123,
 #' }
 run_simulation_with_scenario <- function(seed = 123,
                                        scenario,
-                                       simulation_years = SIMULATION_YEARS,
-                                       annual_phd_cohort = ANNUAL_PHD_COHORT,
-                                       num_departments = NUM_DEPARTMENTS) {
+                                       simulation_years = 20,
+                                       annual_phd_cohort = 300,
+                                       num_departments = 150) {
 
   # Use the optimized simulation with scenario parameter
   sim_results <- run_simulation_optimized(

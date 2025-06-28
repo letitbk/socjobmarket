@@ -8,16 +8,41 @@
 #' @keywords datasets
 NULL
 
-# Global simulation parameters
-SIMULATION_YEARS <- 20  # Default: 2000-2020
-START_YEAR <- 2000
-RECESSION_START <- 2008
-RECESSION_END <- 2012
+#' Get Global Simulation Parameters
+#'
+#' @return List of global simulation parameters
+#' @export
+get_global_params <- function() {
+  list(
+    SIMULATION_YEARS = 20,
+    START_YEAR = 2000,
+    RECESSION_START = 2008,
+    RECESSION_END = 2012,
+    ANNUAL_PHD_COHORT = 300,
+    NUM_DEPARTMENTS = 150,
+    AVG_DEPT_SIZE = 15
+  )
+}
 
-# Population parameters
-ANNUAL_PHD_COHORT <- 300  # New sociology PhDs per year
-NUM_DEPARTMENTS <- 150    # Total departments hiring
-AVG_DEPT_SIZE <- 15       # Average faculty per department
+# Global simulation parameters (for internal package use)
+.SIMULATION_YEARS <- 20  # Default: 2000-2020
+.START_YEAR <- 2000
+.RECESSION_START <- 2008
+.RECESSION_END <- 2012
+
+# Population parameters (for internal package use)
+.ANNUAL_PHD_COHORT <- 300  # New sociology PhDs per year
+.NUM_DEPARTMENTS <- 150    # Total departments hiring
+.AVG_DEPT_SIZE <- 15       # Average faculty per department
+
+# Make parameters available within package
+SIMULATION_YEARS <- .SIMULATION_YEARS
+START_YEAR <- .START_YEAR
+RECESSION_START <- .RECESSION_START
+RECESSION_END <- .RECESSION_END
+ANNUAL_PHD_COHORT <- .ANNUAL_PHD_COHORT
+NUM_DEPARTMENTS <- .NUM_DEPARTMENTS
+AVG_DEPT_SIZE <- .AVG_DEPT_SIZE
 
 #' Default Economic Period Effects
 #'

@@ -20,6 +20,10 @@
 #' )
 #' }
 calculate_transition_rates_detailed <- function(simulation_results, candidate_outcomes) {
+  # Define parameters locally
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+
   if (nrow(candidate_outcomes) == 0) {
     return(data.frame(
       cohort_year = integer(0),
@@ -70,6 +74,10 @@ calculate_transition_rates_detailed <- function(simulation_results, candidate_ou
 #' @return data.frame with transition rates by cohort
 #' @export
 calculate_transition_rates <- function(simulation_results) {
+  # Define parameters locally
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+
   # Extract cohort outcomes from all years
   all_outcomes <- purrr::map_dfr(simulation_results, ~.x$cohort_outcomes)
 
@@ -111,6 +119,10 @@ calculate_transition_rates <- function(simulation_results) {
 #' print(summary$period_summary)
 #' }
 summarize_scenario_results <- function(scenario_results) {
+  # Define parameters locally
+  RECESSION_START <- 2008
+  RECESSION_END <- 2012
+
   cat("Summarizing results across simulations...\n")
 
   # Extract transition rates from all simulations

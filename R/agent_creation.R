@@ -86,6 +86,7 @@ create_faculty <- function(id, department_id, rank = "assistant") {
 #' dept <- create_department(1, prestige_rank = 25)
 #' print(dept)
 create_department <- function(id, prestige_rank = NULL) {
+  AVG_DEPT_SIZE <- 15  # Define locally
   size <- rpois(1, lambda = AVG_DEPT_SIZE) + 5  # Minimum 5 faculty
 
   data.frame(
