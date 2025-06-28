@@ -33,7 +33,7 @@ This package was developed to understand why sociology PhD graduates became sign
 install.packages("devtools")
 
 # Install socjobmarket from GitHub
-devtools::install_github("yourusername/socjobmarket")
+devtools::install_github("letitbk/socjobmarket")
 ```
 
 ### Dependencies
