@@ -1,0 +1,70 @@
+# R specific
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+.Rproj
+*.Rproj
+
+# R package specific
+man/*.Rd
+inst/doc/
+vignettes/*.html
+vignettes/*.pdf
+.Rbuildignore
+
+# Output files
+*.csv
+*.pdf
+*.rds
+*.RData
+
+# Documentation
+docs/_site/
+docs/.sass-cache/
+docs/.jekyll-cache/
+docs/Gemfile.lock
+
+# Build artifacts
+src/*.o
+src/*.so
+src/*.dll
+
+# Temporary files
+*~
+*.tmp
+*.swp
+.#*
+
+# IDE files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Node (if using any JS tools)
+node_modules/
+npm-debug.log*
+
+# Python (if using any Python tools)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Results and outputs (preserve structure but ignore data)
+results/*.csv
+results/*.pdf
+results/*.rds
+output/*.csv
+output/*.pdf
+output/*.rds
+
+# Local development
+.env
+.env.local

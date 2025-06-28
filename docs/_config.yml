@@ -1,0 +1,65 @@
+title: "socjobmarket"
+description: "Agent-Based Simulation of the Academic Job Market in Sociology"
+baseurl: "/socjobmarket"
+url: "https://yourusername.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Navigation
+header_pages:
+  - README.md
+  - docs/installation.md
+  - docs/getting-started.md
+  - docs/api-reference.md
+  - docs/examples.md
+
+# Plugin settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - R/
+  - man/
+  - tests/
+  - vignettes/
+  - *.Rproj
+  - .Rproj.user
+
+# GitHub Pages specific
+repository: yourusername/socjobmarket
+github_username: yourusername
+
+# SEO
+author: "socjobmarket Package Authors"
+twitter_username: ""
+linkedin_username: ""
+
+# Analytics (optional)
+google_analytics: ""
+
+# Additional metadata
+version: "1.0.0"
+license: "MIT"
+r_version: "≥ 4.0.0"

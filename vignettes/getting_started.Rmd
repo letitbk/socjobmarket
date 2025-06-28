@@ -1,0 +1,242 @@
+---
+title: "Getting Started with socjobmarket"
+author: "socjobmarket Package Authors"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Getting Started with socjobmarket}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+## Introduction
+
+The `socjobmarket` package provides a high-performance agent-based simulation framework for analyzing the academic job market in sociology. This vignette will walk you through the basic functionality and show you how to run your first simulations.
+
+## Installation
+
+If you haven't already installed the package:
+
+```{r eval=FALSE}
+# Install from GitHub
+devtools::install_github("yourusername/socjobmarket")
+```
+
+```{r}
+# Load the package
+library(socjobmarket)
+library(ggplot2)  # For additional plotting
+```
+
+## Basic Concepts
+
+The simulation models three types of agents:
+
+1. **Graduate Students**: PhD recipients seeking faculty positions
+2. **Faculty**: Current faculty members who may retire or move
+3. **Departments**: Hiring institutions with varying prestige and standards
+
+The model simulates the job market dynamics from 2000-2020, with special attention to the effects of the 2008 recession.
+
+## Your First Simulation
+
+Let's start with a simple simulation:
+
+```{r}
+# Run a single simulation with 20 years of data
+results <- run_simulation_optimized(
+  seed = 123,           # For reproducibility
+  simulation_years = 20,
+  annual_phd_cohort = 300,
+  num_departments = 150
+)
+
+# Look at the structure
+str(results, max.level = 1)
+```
+
+The results contain:
+- `yearly_stats`: Annual job market statistics
+- `candidate_outcomes`: Individual candidate career outcomes
+
+```{r}
+# View the first few years of data
+head(results$yearly_stats)
+```
+
+## Visualizing Results
+
+Create a basic plot to see placement rates over time:
+
+```{r}
+plot <- create_single_simulation_plot(results)
+print(plot)
+```
+
+You can also create diagnostic plots to understand market dynamics:
+
+```{r}
+diagnostics <- create_diagnostic_plots(results)
+print(diagnostics$supply_vs_demand)
+```
+
+## Understanding Scenarios
+
+The package includes predefined scenarios to test different hypotheses about post-2008 changes:
+
+```{r}
+# View available scenarios
+scenarios <- get_predefined_scenarios()
+names(scenarios)
+```
+
+```{r}
+# Look at one scenario in detail
+scenarios$retirement_delays_only
+```
+
+## Running Scenario Analysis
+
+For rigorous research, you'll want to run multiple simulations to account for randomness:
+
+```{r eval=FALSE}
+# Run a small scenario analysis (use more simulations for research)
+analysis <- main_scenario_analysis(
+  n_sims = 10,              # Use 100+ for research
+  use_parallel = TRUE,      # Use all CPU cores
+  output_dir = "results/"   # Where to save files
+)
+```
+
+This would create several output files:
+- CSV files with detailed results
+- PDF with comprehensive plots
+- Summary statistics
+
+## Custom Scenarios
+
+You can also create your own scenarios:
+
+```{r eval=FALSE}
+# Define a custom scenario
+extreme_scenario <- list(
+  name = "Extreme Recession Effects",
+  retirement_delay_factor = 0.2,    # Very delayed retirement
+  search_standards_inflation = 2.0,  # Much higher standards
+  postdoc_duration_multiplier = 3.0, # Very long postdocs
+  search_failure_tolerance = 0.8,    # High failure tolerance
+  apply_recession_effects = TRUE
+)
+
+# Run simulation with custom scenario
+custom_results <- run_simulation_with_scenario(
+  seed = 456,
+  scenario = extreme_scenario
+)
+
+# Analyze transition rates
+transition_rates <- calculate_transition_rates_detailed(
+  custom_results$results,
+  custom_results$candidate_outcomes
+)
+print(transition_rates)
+```
+
+## Creating Agents
+
+You can also create and examine individual agents:
+
+```{r}
+# Create a sample graduate student
+student <- create_graduate_student(id = 1, cohort_year = 2020)
+print(student)
+```
+
+```{r}
+# Create a department
+department <- create_department(id = 1, prestige_rank = 25)
+print(department)
+```
+
+```{r}
+# Calculate match quality between them
+quality <- calculate_match_quality(student, department)
+cat("Match quality:", quality)
+```
+
+## Batch Agent Creation
+
+For larger simulations, use the batch creation function:
+
+```{r}
+# Create multiple students from 2020 cohort
+students <- create_multiple_agents("student", n = 5, cohort_year = 2020)
+print(students)
+```
+
+## Performance Tips
+
+The package is optimized for performance:
+
+1. **Use vectorized functions**: `calculate_match_quality_vectorized()` is much faster than the single version
+2. **Enable parallel processing**: Set `use_parallel = TRUE` for scenario analysis
+3. **Use data.table**: All internal operations use `data.table` for speed
+
+```{r eval=FALSE}
+# Benchmark: vectorized vs single calculations
+library(microbenchmark)
+
+# Create test data
+candidates <- create_multiple_agents("student", 100, cohort_year = 2020)
+dept <- create_department(1)
+
+# Compare speeds
+microbenchmark(
+  vectorized = calculate_match_quality_vectorized(candidates, dept),
+  single = sapply(1:nrow(candidates), function(i) {
+    calculate_match_quality(candidates[i,], dept)
+  }),
+  times = 10
+)
+```
+
+## Research Workflow
+
+A typical research workflow might look like:
+
+1. **Exploratory analysis**: Run single simulations to understand dynamics
+2. **Scenario development**: Create scenarios based on research hypotheses
+3. **Monte Carlo analysis**: Run many simulations for statistical power
+4. **Result analysis**: Use built-in summarization and plotting functions
+5. **Publication**: Export CSV data and PDF plots for papers
+
+## Next Steps
+
+- See the "Advanced Usage" vignette for more complex analyses
+- Check the function documentation for detailed parameter descriptions
+- Explore the source code on GitHub for customization ideas
+- Use the package for your own research on academic labor markets
+
+## Getting Help
+
+If you encounter issues:
+
+1. Check the function documentation: `?function_name`
+2. Look at the GitHub issues page
+3. Create a new issue with a reproducible example
+
+Happy simulating!

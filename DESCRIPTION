@@ -1,0 +1,37 @@
+Package: socjobmarket
+Type: Package
+Title: Agent-Based Simulation of the Academic Job Market in Sociology
+Version: 1.0.0
+Date: 2025-01-19
+Authors@R: c(
+    person("Your Name", "Here", email = "your.email@example.com", role = c("aut", "cre"))
+    )
+Description: An optimized agent-based model for simulating the academic job market
+    in sociology. The package implements a high-performance simulation framework to
+    analyze how different economic and institutional factors affect PhD-to-faculty
+    transition rates. Includes scenarios for studying the impact of the 2008 recession,
+    delayed retirements, extended postdocs, and failed searches on academic career
+    pathways.
+License: MIT + file LICENSE
+URL: https://github.com/yourusername/socjobmarket
+BugReports: https://github.com/yourusername/socjobmarket/issues
+Depends:
+    R (>= 4.0.0)
+Imports:
+    data.table (>= 1.14.0),
+    dplyr (>= 1.0.0),
+    ggplot2 (>= 3.3.0),
+    purrr (>= 0.3.0),
+    tidyr (>= 1.1.0),
+    scales (>= 1.1.0),
+    parallel
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    microbenchmark,
+    devtools
+VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.0
