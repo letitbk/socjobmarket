@@ -7,7 +7,7 @@
 #' @param candidate_outcomes data.table of candidate outcomes with cohort_year and career_outcome
 #' @return data.frame with transition rates by cohort
 #' @export
-#' @importFrom dplyr group_by summarise mutate filter case_when
+#' @importFrom dplyr group_by summarise mutate filter case_when n
 #' @importFrom tidyr pivot_wider
 #' @importFrom magrittr %>%
 #' @examples
