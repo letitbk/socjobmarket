@@ -9,6 +9,7 @@
 #' @export
 #' @importFrom dplyr group_by summarise mutate filter case_when
 #' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # After running a simulation
@@ -102,6 +103,7 @@ calculate_transition_rates <- function(simulation_results) {
 #' @export
 #' @importFrom dplyr group_by summarise select
 #' @importFrom purrr map_dfr
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' scenario_results <- run_parallel_scenario_analysis(n_sims = 10)

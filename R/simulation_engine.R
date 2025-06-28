@@ -35,7 +35,7 @@ run_simulation_optimized <- function(seed = 123,
   departments <- data.table::data.table(
     id = 1:num_departments,
     type = "department",
-    prestige_rank = sample(1:100, num_departments),
+    prestige_rank = sample(1:100, num_departments, replace = TRUE),
     size = pmax(5, rpois(num_departments, AVG_DEPT_SIZE)),
     research_orientation = runif(num_departments, 3, 8),
     budget_constraint = 1.0,
@@ -57,9 +57,9 @@ run_simulation_optimized <- function(seed = 123,
   )
 
   # Set age based on rank
-  faculty_agents[rank == "assistant", age := sample(28:35, .N)]
-  faculty_agents[rank == "associate", age := sample(35:50, .N)]
-  faculty_agents[rank == "full", age := sample(45:68, .N)]
+  faculty_agents[rank == "assistant", age := sample(28:35, .N, replace = TRUE)]
+  faculty_agents[rank == "associate", age := sample(35:50, .N, replace = TRUE)]
+  faculty_agents[rank == "full", age := sample(45:68, .N, replace = TRUE)]
 
   # Set derived variables
   faculty_agents[, tenure_status := ifelse(rank == "assistant", "tenure_track", "tenured")]

@@ -13,6 +13,10 @@
 #' @return List of results organized by scenario
 #' @export
 #' @importFrom parallel detectCores mclapply
+#' @importFrom purrr map_dfr
+#' @importFrom dplyr mutate select
+#' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Run full analysis
@@ -87,6 +91,10 @@ run_parallel_scenario_analysis <- function(n_sims = 100,
 #' @param num_departments Number of departments
 #' @return List with scenario_results, summary_results, and plots
 #' @export
+#' @importFrom parallel detectCores
+#' @importFrom dplyr select
+#' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Full analysis with default settings

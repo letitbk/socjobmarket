@@ -24,7 +24,8 @@ Imports:
     purrr (>= 0.3.0),
     tidyr (>= 1.1.0),
     scales (>= 1.1.0),
-    parallel
+    parallel,
+    magrittr
 Suggests:
     testthat (>= 3.0.0),
     knitr,
@@ -34,4 +35,4 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.2

@@ -7,6 +7,7 @@
 #' @param prestige_origin Prestige rank of origin institution (1-10, optional)
 #' @return A data.frame with graduate student characteristics
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' student <- create_graduate_student(1, 2020)
 #' print(student)
@@ -41,6 +42,7 @@ create_graduate_student <- function(id, cohort_year, prestige_origin = NULL) {
 #' @param rank Academic rank: "assistant", "associate", or "full"
 #' @return A data.frame with faculty characteristics
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' faculty <- create_faculty(1, 5, "assistant")
 #' print(faculty)
@@ -120,13 +122,40 @@ create_multiple_agents <- function(agent_type, n, ...) {
     stop("purrr package is required for this function")
   }
 
-  creation_fun <- switch(agent_type,
-    "student" = create_graduate_student,
-    "faculty" = create_faculty,
-    "department" = create_department,
+  # Handle different argument structures for different agent types
+  if (agent_type == "student") {
+    additional_args <- list(...)
+    cohort_year <- additional_args$cohort_year
+    if (is.null(cohort_year)) {
+      stop("cohort_year must be provided for student agents")
+    }
+    # Remove cohort_year from ... since we pass it explicitly
+    other_args <- additional_args[names(additional_args) != "cohort_year"]
+    agents <- purrr::map_dfr(1:n, function(i) {
+      do.call(create_graduate_student, c(list(id = i, cohort_year = cohort_year), other_args))
+    })
+  } else if (agent_type == "faculty") {
+    additional_args <- list(...)
+    department_id <- additional_args$department_id
+    if (is.null(department_id)) {
+      # If no department_id provided, assign sequentially
+      department_id <- rep(1:ceiling(n/10), length.out = n)[1:n]  # Default distribution
+    }
+    if (length(department_id) == 1) {
+      department_id <- rep(department_id, n)  # Repeat if single value
+    }
+    # Remove department_id from ... since we pass it explicitly
+    other_args <- additional_args[names(additional_args) != "department_id"]
+    agents <- purrr::map2_dfr(1:n, department_id, function(i, dept_id) {
+      do.call(create_faculty, c(list(id = i, department_id = dept_id), other_args))
+    })
+  } else if (agent_type == "department") {
+    agents <- purrr::map_dfr(1:n, function(i) {
+      do.call(create_department, c(list(id = i), list(...)))
+    })
+  } else {
     stop("Invalid agent_type. Must be 'student', 'faculty', or 'department'")
-  )
+  }
 
-  agents <- purrr::map_dfr(1:n, ~creation_fun(.x, ...))
   data.table::as.data.table(agents)
 }
